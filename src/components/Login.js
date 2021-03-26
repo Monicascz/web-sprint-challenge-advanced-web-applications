@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios'
+import {axiosWithAuth} from '../helpers/axiosWithAuth'
+import {useHistory} from 'react-router-dom'
 
 const Login = () => {
   // make a post request to retrieve a token from the api
@@ -9,6 +10,7 @@ const Login = () => {
     password: ''
   })
   const [error, setError] = useState("Username or Password not valid.")
+  const history = useHistory();
 
   const handleChanges = (e) => {
     setFormVal({...formVal, [e.target.name]:e.target.value})
@@ -17,7 +19,16 @@ const Login = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
 
-    axios.post('http://')
+    axiosWithAuth()
+    .post('/login', formVal)
+    .then((resp)=>{
+      // console.log(resp.data.payload)
+      localStorage.setItem("token", resp.data.payload)
+      history.push('/bubbles')
+    })
+    .catch((err)=>{
+      console.log("Error:", err.response)
+    })
 
   }
 
@@ -46,8 +57,6 @@ const Login = () => {
           value={formVal.username}
           onChange={handleChanges}></input>
 
-         
-
           <input
           data-testid="password"
           placeholder="password"
@@ -56,15 +65,10 @@ const Login = () => {
           value={formVal.password}
           onChange={handleChanges}></input>
           <button > Login </button>
-          {formVal.username === "Lambda" && formVal.password === "i<3Lambd4" ? null : <p data-testid="errorMessage" className="error">{error} </p>}
-          
-          
+          {formVal.username === "Lambda School" && formVal.password === "i<3Lambd4" ? null : <p data-testid="errorMessage" className="error">{error} </p>}
           
         </form>
-
       </div>
-
-      
     </div>
   );
 };

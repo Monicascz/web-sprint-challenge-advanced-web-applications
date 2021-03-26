@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Bubbles from "./Bubbles";
+// import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
 
 const BubblePage = () => {
@@ -9,7 +9,7 @@ const BubblePage = () => {
   return (
     <div className="container">
       <ColorList colors={colorList} updateColors={setColorList} />
-      <Bubbles colors={colorList} />
+      {/* <Bubbles colors={colorList} /> */}
     </div>
   );
 };
