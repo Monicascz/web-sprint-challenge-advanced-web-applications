@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {axiosWithAuth} from '../helpers/axiosWithAuth'
-import {useHistory} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 
 const Login = () => {
   // make a post request to retrieve a token from the api
@@ -11,6 +11,7 @@ const Login = () => {
   })
   const [error, setError] = useState("Username or Password not valid.")
   const history = useHistory();
+  const {id} = useParams();
 
   const handleChanges = (e) => {
     setFormVal({...formVal, [e.target.name]:e.target.value})
@@ -24,7 +25,7 @@ const Login = () => {
     .then((resp)=>{
       // console.log(resp.data.payload)
       localStorage.setItem("token", resp.data.payload)
-      history.push('/bubbles')
+      history.push(`/bubbles`)
     })
     .catch((err)=>{
       console.log("Error:", err.response)
