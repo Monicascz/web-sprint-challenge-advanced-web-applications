@@ -41,8 +41,15 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const deleteColor = color => {
-    // const newColors = colors.filter((item) => item.id !== resp.data.id);
-    //     updateColors([...newColors, resp.data])
+    axiosWithAuth()
+    .delete(`/colors/${colorToEdit.id}`)
+    .then((res) => {
+      updateColors(colors.filter(item => item.id !== color.id))
+      setEditing(false)
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
   };
 
   return (
