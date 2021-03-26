@@ -1,25 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios'
 
 const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
+  const [formVal, setFormVal] = useState({
+    username: '',
+    password: ''
+  })
+  const [error, setError] = useState("Username or Password not valid.")
+
+  const handleChanges = (e) => {
+    setFormVal({...formVal, [e.target.name]:e.target.value})
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+
+    axios.post('http://')
+
+  }
 
   useEffect(()=>{
     // make a post request to retrieve a token from the api
     // when you have handled the token, navigate to the BubblePage route
   });
   
-  const error = "";
-  //replace with error state
+
+  //I chose to put error in as state above. 
+  // const error = "Username or Password not valid.";
+  // //replace with error state
 
   return (
     <div>
       <h1>Welcome to the Bubble App!</h1>
       <div data-testid="loginForm" className="login-form">
-        <h2>Build login form here</h2>
+        <form onSubmit={handleSubmit}>
+          
+          
+          <input
+          data-testid="username"
+          placeholder="username"
+          type="text"
+          name="username"
+          value={formVal.username}
+          onChange={handleChanges}></input>
+
+         
+
+          <input
+          data-testid="password"
+          placeholder="password"
+          type="text"
+          name="password"
+          value={formVal.password}
+          onChange={handleChanges}></input>
+          <button > Login </button>
+          {formVal.username === "Lambda" && formVal.password === "i<3Lambd4" ? null : <p data-testid="errorMessage" className="error">{error} </p>}
+          
+          
+          
+        </form>
+
       </div>
 
-      <p data-testid="errorMessage" className="error">{error}</p>
+      
     </div>
   );
 };
